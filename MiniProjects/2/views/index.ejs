@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/main.css">
+  <title>Brewary Lookup</title>
+</head>
+<body>
+
+    <h1>Ready to find your new favorite brewary?!</h1>
+    
+  <div class="container">
+  <form action="/random" method="GET">
+     <button type="submit">Random Brewery</button>
+  </form>
+
+  <form action="/search" method="POST">
+
+    <select name="searchType">
+      <option value="city">Search by City</option>
+      <option value="zip">Search by Zip Code</option>
+    </select>
+    <input type="text" name="query" placeholder="Enter city or zip..." required />
+    <button type="submit">Search</button>
+  </form>
+  </div>
+
+  <% if (error) { %>
+    <%= error %>
+  <% } %>
+
+  <% if (breweries && breweries.length > 0) { %>
+    <h2>Results:</h2>
+    <% breweries.forEach(brewery => { %>
+      <div class="brewery">
+        <h3><%= brewery.name %></h3>
+        <p><strong>Address:</strong> <%= brewery.street %>, <%= brewery.city %>, <%= brewery.state %> <%= brewery.postal_code %></p>
+        <p><strong>Phone Number:</strong> <%= brewery.phone %></p>
+        <% if (brewery.website_url) { %>
+          <p><a href="<%= brewery.website_url %>" target="_blank">Website</a></p>
+        <% } %>
+      </div>
+    <% }); %>
+  <% } else if (breweries && breweries.length === 0) { %>
+    <p>No breweries found for that location.</p>
+  <% } %>
+  </div>
+
+</body>
+
+</html>
